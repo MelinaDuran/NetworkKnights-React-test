@@ -35,7 +35,7 @@ function AdoptarId({ params }) {
     });
 
   useEffect(() => {
-    if (!isLoading && user) {
+    if (!isLoading && !error && user) {
       const getPets = async () => {
         const response = await fetch("/api/get-orders/" + user.email);
         const data = await response.json();
