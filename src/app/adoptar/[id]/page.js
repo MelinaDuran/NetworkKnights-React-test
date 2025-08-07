@@ -19,6 +19,16 @@ function AdoptarId({ params }) {
   const router = useRouter();
   const apiURL = 'http://127.0.0.1:8000/rest';
 
+   useEffect(() => {
+    fetch(`${apiURL}/pets/${params.id}`)
+      .then(response => response.json())
+      .then(data => {
+        setPet(data);
+        getPetTips(data); // Obtener consejos automáticamente
+      })
+      .catch(error => console.error('Error fetching pet data:', error));
+  }, [params.id]);
+
     if (isLoading) return <div>Loading...</div>;
     if (error) return <div>{error.message}</div>;
 
@@ -53,15 +63,7 @@ function AdoptarId({ params }) {
 
     };
 
-  useEffect(() => {
-    fetch(`${apiURL}/pets/${params.id}`)
-      .then(response => response.json())
-      .then(data => {
-        setPet(data);
-        getPetTips(data); // Obtener consejos automáticamente
-      })
-      .catch(error => console.error('Error fetching pet data:', error));
-  }, [params.id]);
+ 
 
   const getPetTips = async (petData) => {
     if (!petData) return;
