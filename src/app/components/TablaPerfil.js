@@ -11,10 +11,7 @@ function TablaPerfil() {
 
   const { user, isLoading } = useUser();
 
-  if (isLoading) {
-    // Mostrar un indicador de carga mientras Auth0 verifica la sesión
-    return <div>Cargando...</div>;
-  }
+
 
   const email = user.email;
   //console.log('email:',email);
@@ -31,8 +28,13 @@ function TablaPerfil() {
       setPets(data);
       console.log("Respuesta del backend:", data);
     }
-    getPets();
+    if (!isLoading) { getPets(); }
   }, []);
+
+  if (isLoading) {
+    // Mostrar un indicador de carga mientras Auth0 verifica la sesión
+    return <div>Cargando...</div>;
+  }
 
   const categoryNames = {
     1: "Perro",
