@@ -19,7 +19,7 @@ function AdoptarId({ params }) {
   const router = useRouter();
   const apiURL = 'http://127.0.0.1:8000/rest';
 
-    const getPetTips = async (petData) => {
+  const getPetTips = async (petData) => {
     if (!petData) return;
 
     const response = await fetch(`${apiURL}/getPetTips`, {
@@ -31,9 +31,9 @@ function AdoptarId({ params }) {
         sex: petData.sex,
         size: petData.size,
       }),
-/*>>>>>>> main*/
+      /*>>>>>>> main*/
     });
-    }
+  }
 
   useEffect(() => {
     if (!isLoading && !error && user) {
@@ -48,47 +48,47 @@ function AdoptarId({ params }) {
     }
   }, [isLoading, user]);
 
-    if (isLoading) return <div>Loading...</div>;
-    if (error) return <div>{error.message}</div>;
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>{error.message}</div>;
 
   const handleShow = () => setShow(true);
 
   const handleClose = () => setShow(false);
 
   const handleSubmit = async (e) => {
-    
+
     e.preventDefault();
-    
-    const queryJson={
+
+    const queryJson = {
       email: user.email,
       id_pet: params.id,
       name: user.given_name,
       surname: user.family_name,
       address: address
-    } 
+    }
 
     console.log("Datos enviados:", queryJson);
 
     const response = await fetch("/api/create-order", {
-        method: 'POST',
-        headers: {
+      method: 'POST',
+      headers: {
         'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(queryJson)
+      },
+      body: JSON.stringify(queryJson)
     });
 
     router.push('/perfil'); // Cambiá '/perfil' por la ruta real del perfil de usuario
-    
-
-    };
-
- 
 
 
-
-    const data = await response.json();
-    setTips(data.tips || 'No se pudieron obtener los consejos.');
   };
+
+
+
+
+
+  const data = response.json();
+  setTips(data.tips || 'No se pudieron obtener los consejos.');
+
 
   return (
     <div style={styles.container}>
@@ -99,8 +99,8 @@ function AdoptarId({ params }) {
           <img src={pet.image} alt={pet.name} style={styles.petImage} />
           <p style={styles.petText}>🐾 Tipo: <strong>{pet.category_name}</strong></p>
           <p style={styles.petText}>
-  ⚧ Sexo: <strong>{pet.sex === "male" ? "Macho" : "Hembra"}</strong>
-</p>
+            ⚧ Sexo: <strong>{pet.sex === "male" ? "Macho" : "Hembra"}</strong>
+          </p>
 
 
           {/* Formulario para enviar la orden */}
@@ -116,14 +116,14 @@ function AdoptarId({ params }) {
             </FormGroup>
             <FormGroup controlId="formAddress">
               <FormLabel>Dirección</FormLabel>
-                <FormControl
-                  type="text"
-                  value={address}
-                  onChange={(e) => setAddress(e.target.value)}
-                  style={styles.input}
-                />
-           </FormGroup>
-            <Button  onClick={handleShow} variant="primary" type="submit">
+              <FormControl
+                type="text"
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
+                style={styles.input}
+              />
+            </FormGroup>
+            <Button onClick={handleShow} variant="primary" type="submit">
               Adoptar ❤️
             </Button>
           </Form>
@@ -139,17 +139,17 @@ function AdoptarId({ params }) {
       </div>
 */}
       <div style={styles.tipsContainer}>
-      <h4 style={styles.tipsTitle}>Consejos de cuidado:</h4>
-      <div
-        style={{
-        ...styles.tipsText,
-        position: 'relative',
-        overflowY: 'auto',
-        paddingRight: '10px'
-      }}
-      dangerouslySetInnerHTML={{ __html: tips }}
-  />
-</div>
+        <h4 style={styles.tipsTitle}>Consejos de cuidado:</h4>
+        <div
+          style={{
+            ...styles.tipsText,
+            position: 'relative',
+            overflowY: 'auto',
+            paddingRight: '10px'
+          }}
+          dangerouslySetInnerHTML={{ __html: tips }}
+        />
+      </div>
     </div>
   );
 
