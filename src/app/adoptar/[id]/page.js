@@ -33,6 +33,7 @@ function AdoptarId({ params }) {
       }),
 /*>>>>>>> main*/
     });
+    }
 
   useEffect(() => {
     if (!isLoading && !error && user) {
