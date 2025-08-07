@@ -34,15 +34,18 @@ function AdoptarId({ params }) {
 /*>>>>>>> main*/
     });
 
-   useEffect(() => {
-    fetch(`${apiURL}/pets/${params.id}`)
-      .then(response => response.json())
-      .then(data => {
-        setPet(data);
-        getPetTips(data); // Obtener consejos automáticamente
-      })
-      .catch(error => console.error('Error fetching pet data:', error));
-  }, [params.id]);
+  useEffect(() => {
+    if (!isLoading && user) {
+      const getPets = async () => {
+        const response = await fetch("/api/get-orders/" + user.email);
+        const data = await response.json();
+        setPets(data);
+        console.log("Respuesta del backend:", data);
+      };
+
+      getPets();
+    }
+  }, [isLoading, user]);
 
     if (isLoading) return <div>Loading...</div>;
     if (error) return <div>{error.message}</div>;
