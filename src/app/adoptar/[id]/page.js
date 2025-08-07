@@ -19,6 +19,21 @@ function AdoptarId({ params }) {
   const router = useRouter();
   const apiURL = 'http://127.0.0.1:8000/rest';
 
+    const getPetTips = async (petData) => {
+    if (!petData) return;
+
+    const response = await fetch(`${apiURL}/getPetTips`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name: petData.name,
+        category: petData.category_name,
+        sex: petData.sex,
+        size: petData.size,
+      }),
+/*>>>>>>> main*/
+    });
+
    useEffect(() => {
     fetch(`${apiURL}/pets/${params.id}`)
       .then(response => response.json())
@@ -65,20 +80,7 @@ function AdoptarId({ params }) {
 
  
 
-  const getPetTips = async (petData) => {
-    if (!petData) return;
 
-    const response = await fetch(`${apiURL}/getPetTips`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        name: petData.name,
-        category: petData.category_name,
-        sex: petData.sex,
-        size: petData.size,
-      }),
-/*>>>>>>> main*/
-    });
 
     const data = await response.json();
     setTips(data.tips || 'No se pudieron obtener los consejos.');
